@@ -42,7 +42,7 @@ public class ConfigurationValueProducerTest extends Arquillian {
 	@Inject
 	@ConfigurationValue("myArbitraryKey")
 	Double myDoubleProp;
-	
+
 	@Inject
 	@ConfigurationValue("myArbitraryKeyInt")
 	Integer myIntegerProp;
@@ -60,8 +60,9 @@ public class ConfigurationValueProducerTest extends Arquillian {
 
 	@Deployment
 	public static Archive<?> createDeployment() throws IOException {
-		JavaArchive archive = ShrinkWrap.create(JavaArchive.class).addPackage(
-				PropertyResolver.class.getPackage());
+		JavaArchive archive = ShrinkWrap.create(JavaArchive.class)
+				.addPackage(PropertyResolver.class.getPackage()).addAsResource("another.properties")
+				.addAsResource("testProperties.properties");
 
 		return archive;
 	}

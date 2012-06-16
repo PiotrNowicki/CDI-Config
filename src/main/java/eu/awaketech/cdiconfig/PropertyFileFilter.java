@@ -26,7 +26,7 @@ public class PropertyFileFilter implements FileFilter {
 		 * FIXME: Change to something more appropriate - user can have a dir named "classes" on the regular
 		 * path - should it also be scanned for 'properties'?
 		 */
-		boolean isWebInfResource = pathname.getAbsolutePath().contains("/classes/");
+		boolean isWebInfResource = pathname.getAbsolutePath().contains("classes/");
 
 		if (isDirectory || !isWebInfResource) {
 			return false;
