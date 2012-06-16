@@ -18,31 +18,31 @@ import org.testng.annotations.Test;
 
 public class PropertyResolverTest extends Arquillian {
 
-	@Inject
-	PropertyResolver cut;
+    @Inject
+    PropertyResolver cut;
 
-	@Deployment
-	public static Archive<?> createDeployment() throws IOException {
-		JavaArchive archive = ShrinkWrap.create(JavaArchive.class).addClass(PropertyResolver.class);
+    @Deployment
+    public static Archive<?> createDeployment() throws IOException {
+        JavaArchive archive = ShrinkWrap.create(JavaArchive.class).addClass(PropertyResolver.class);
 
-		return archive;
-	}
+        return archive;
+    }
 
-	@Test(dataProvider = "keyProvider")
-	public void getValue(String key, String expected) {
-		String actual = cut.getValue(key);
-		
-		assertThat(actual).isEqualTo(expected);
-	}
+    @Test(dataProvider = "keyProvider")
+    public void getValue(String key, String expected) {
+        String actual = cut.getValue(key);
 
-	@DataProvider(name = "keyProvider")
-	Object[][] dataProvider() {
-		List<Object[]> data = new ArrayList<>();
+        assertThat(actual).isEqualTo(expected);
+    }
 
-		data.add(new Object[] { "myProp", "myVal" });
-		data.add(new Object[] { "myProp2", "myVal2" });
-		data.add(new Object[] { "myProp3", null });
+    @DataProvider(name = "keyProvider")
+    Object[][] dataProvider() {
+        List<Object[]> data = new ArrayList<>();
 
-		return data.toArray(new Object[0][0]);
-	}
+        data.add(new Object[] { "myProp", "myVal" });
+        data.add(new Object[] { "myProp2", "myVal2" });
+        data.add(new Object[] { "myProp3", null });
+
+        return data.toArray(new Object[0][0]);
+    }
 }

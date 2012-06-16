@@ -20,15 +20,15 @@ import javax.inject.Qualifier;
 @Retention(RUNTIME)
 @Target({ TYPE, METHOD, FIELD, PARAMETER })
 public @interface ConfigurationValue {
-	/**
-	 * Key that will be searched when injecting the value.
-	 */
-	@Nonbinding
-	String value() default "";
+    /**
+     * Key that will be searched when injecting the value.
+     */
+    @Nonbinding
+    String value() default "";
 
-	/**
-	 * Defines if value for the given key must be defined.
-	 */
-	@Nonbinding
-	boolean required() default true;
+    /**
+     * Defines if value for the given key must be defined.
+     */
+    @Nonbinding
+    boolean required() default true;
 }

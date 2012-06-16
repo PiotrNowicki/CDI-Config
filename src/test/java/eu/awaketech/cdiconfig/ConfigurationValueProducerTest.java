@@ -24,68 +24,68 @@ import org.testng.annotations.Test;
 // 2. invalid conversion between String and Double/Integer.
 public class ConfigurationValueProducerTest extends Arquillian {
 
-	/*
-	 * A bunch of injected values which are valid.
-	 */
-	@Inject
-	@ConfigurationValue
-	String myProp;
+    /*
+     * A bunch of injected values which are valid.
+     */
+    @Inject
+    @ConfigurationValue
+    String myProp;
 
-	@Inject
-	@ConfigurationValue("myProp2")
-	String myPropWithDifferentName;
+    @Inject
+    @ConfigurationValue("myProp2")
+    String myPropWithDifferentName;
 
-	@Inject
-	@ConfigurationValue
-	String myProp3;
+    @Inject
+    @ConfigurationValue
+    String myProp3;
 
-	@Inject
-	@ConfigurationValue("myArbitraryKey")
-	Double myDoubleProp;
+    @Inject
+    @ConfigurationValue("myArbitraryKey")
+    Double myDoubleProp;
 
-	@Inject
-	@ConfigurationValue("myArbitraryKeyInt")
-	Integer myIntegerProp;
+    @Inject
+    @ConfigurationValue("myArbitraryKeyInt")
+    Integer myIntegerProp;
 
-	/*
-	 * A bunch of values that cannot be injected (no key defined) but won't crash the CDI at the deploy time.
-	 */
-	@Inject
-	@ConfigurationValue(required = false)
-	String myInvalidProp;
+    /*
+     * A bunch of values that cannot be injected (no key defined) but won't crash the CDI at the deploy time.
+     */
+    @Inject
+    @ConfigurationValue(required = false)
+    String myInvalidProp;
 
-	@Inject
-	@ConfigurationValue(value = "invalidPropKey", required = false)
-	String myInvalidProp2;
+    @Inject
+    @ConfigurationValue(value = "invalidPropKey", required = false)
+    String myInvalidProp2;
 
-	@Deployment
-	public static Archive<?> createDeployment() throws IOException {
-		JavaArchive archive = ShrinkWrap.create(JavaArchive.class)
-				.addPackage(PropertyResolver.class.getPackage()).addAsResource("another.properties")
-				.addAsResource("testProperties.properties");
+    @Deployment
+    public static Archive<?> createDeployment() throws IOException {
+        JavaArchive archive = ShrinkWrap.create(JavaArchive.class)
+                .addPackage(PropertyResolver.class.getPackage()).addAsResource("another.properties")
+                .addAsResource("testProperties.properties");
 
-		return archive;
-	}
+        return archive;
+    }
 
-	@Test
-	public void getDoubleConfigValue() {
-		assertThat(myDoubleProp).isEqualTo(22.15);
-	}
+    @Test
+    public void getDoubleConfigValue() {
+        assertThat(myDoubleProp).isEqualTo(22.15);
+    }
 
-	@Test
-	public void getIntegerConfigValue() {
-		assertThat(myIntegerProp).isEqualTo(9);
-	}
+    @Test
+    public void getIntegerConfigValue() {
+        assertThat(myIntegerProp).isEqualTo(9);
+    }
 
-	@Test
-	public void getStringConfigValue() {
-		// Properly injected properties
-		assertThat(myProp).isEqualTo("myVal");
-		assertThat(myPropWithDifferentName).isEqualTo("myVal2");
-		assertThat(myProp3).isEqualTo("myVal3");
+    @Test
+    public void getStringConfigValue() {
+        // Properly injected properties
+        assertThat(myProp).isEqualTo("myVal");
+        assertThat(myPropWithDifferentName).isEqualTo("myVal2");
+        assertThat(myProp3).isEqualTo("myVal3");
 
-		// Invalid properties, but no exception - they have 'required = false'
-		assertThat(myInvalidProp).isNull();
-		assertThat(myInvalidProp2).isNull();
-	}
+        // Invalid properties, but no exception - they have 'required = false'
+        assertThat(myInvalidProp).isNull();
+        assertThat(myInvalidProp2).isNull();
+    }
 }

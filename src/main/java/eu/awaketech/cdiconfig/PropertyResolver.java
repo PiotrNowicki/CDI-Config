@@ -35,48 +35,48 @@ import javax.inject.Singleton;
 @Singleton
 public class PropertyResolver {
 
-	// TODO: Change it to some hierarchical structure if required.
-	Map<String, Object> properties = new HashMap<>();
+    // TODO: Change it to some hierarchical structure if required.
+    Map<String, Object> properties = new HashMap<>();
 
-	/**
-	 * Initializes the properties by reading and uniforming them.
-	 * 
-	 * This method is called by the container only. It's not supposed to be invoked by the client directly.
-	 * 
-	 * @throws IOException
-	 *             in case of any property file access problem
-	 */
-	@SuppressWarnings({ "rawtypes", "unused", "unchecked" })
-	@PostConstruct
-	private void init() throws IOException {
+    /**
+     * Initializes the properties by reading and uniforming them.
+     * 
+     * This method is called by the container only. It's not supposed to be invoked by the client directly.
+     * 
+     * @throws IOException
+     *             in case of any property file access problem
+     */
+    @SuppressWarnings({ "rawtypes", "unused", "unchecked" })
+    @PostConstruct
+    private void init() throws IOException {
 
-		Enumeration<URL> resources = Thread.currentThread().getContextClassLoader().getResources("");
+        Enumeration<URL> resources = Thread.currentThread().getContextClassLoader().getResources("");
 
-		while (resources.hasMoreElements()) {
-			File resource = new File(resources.nextElement().getPath());
+        while (resources.hasMoreElements()) {
+            File resource = new File(resources.nextElement().getPath());
 
-			File[] propertyFiles = resource.listFiles(new PropertyFileFilter());
+            File[] propertyFiles = resource.listFiles(new PropertyFileFilter());
 
-			for (File file : propertyFiles) {
-				Properties p = new Properties();
-				p.load(new FileInputStream(file));
-				
-				// TODO: If required - notify if added key was already present in the map
-				properties.putAll(new HashMap<String, Object>((Map) p));
-			}
-		}
-	}
+            for (File file : propertyFiles) {
+                Properties p = new Properties();
+                p.load(new FileInputStream(file));
 
-	/**
-	 * Returns property held under specified <code>key</code>. If the value is supposed to be of any other
-	 * type than {@link String}, it's up to the client to do appropriate casting.
-	 * 
-	 * @param key
-	 * @return value for specified <code>key</code> or null if not defined.
-	 */
-	public String getValue(String key) {
-		Object value = properties.get(key);
-		
-		return (value != null) ? String.valueOf(value) : null;
-	}
+                // TODO: If required - notify if added key was already present in the map
+                properties.putAll(new HashMap<String, Object>((Map) p));
+            }
+        }
+    }
+
+    /**
+     * Returns property held under specified <code>key</code>. If the value is supposed to be of any other
+     * type than {@link String}, it's up to the client to do appropriate casting.
+     * 
+     * @param key
+     * @return value for specified <code>key</code> or null if not defined.
+     */
+    public String getValue(String key) {
+        Object value = properties.get(key);
+
+        return (value != null) ? String.valueOf(value) : null;
+    }
 }
