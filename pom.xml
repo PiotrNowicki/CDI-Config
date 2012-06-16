@@ -8,13 +8,6 @@
 	<url>http://www.piotrnowicki.com</url>
 	<dependencies>
 
-		<!-- <dependency> -->
-		<!-- <groupId>javax</groupId> -->
-		<!-- <artifactId>javaee-api</artifactId> -->
-		<!-- <version>6.0</version> -->
-		<!-- <scope>provided</scope> -->
-		<!-- </dependency> -->
-
 		<dependency>
 			<groupId>org.jboss.spec</groupId>
 			<artifactId>jboss-javaee-6.0</artifactId>
@@ -52,16 +45,6 @@
 			<artifactId>weld-core</artifactId>
 			<version>1.1.8.Final</version>
 			<scope>test</scope>
-			<!-- <exclusions> -->
-			<!-- <exclusion> -->
-			<!-- <groupId>org.slf4j</groupId> -->
-			<!-- <artifactId>slf4j-api</artifactId> -->
-			<!-- </exclusion> -->
-			<!-- <exclusion> -->
-			<!-- <groupId>org.slf4j</groupId> -->
-			<!-- <artifactId>slf4j-ext</artifactId> -->
-			<!-- </exclusion> -->
-			<!-- </exclusions> -->
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
