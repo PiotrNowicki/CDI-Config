@@ -2,7 +2,10 @@ package com.piotrnowicki.cdiconfig;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +33,24 @@ public class PropertyResolverTest extends Arquillian {
         return archive;
     }
 
+    @Test(dataProvider="getFileFromURLProvider")
+    public void getFileFromURL(URL url, File expected) {
+        File actual = cut.getFileFromURL(url);
+        
+        assertThat(actual).isEqualTo(expected);
+    }
+    
+    @DataProvider(name = "getFileFromURLProvider")
+    Object[][] getFileFromURLProvider() throws MalformedURLException {
+        List<Object[]> data = new ArrayList<>();
+
+        data.add(new Object[] { new URL("file:///testMyFile"), new File("/testMyFile") });
+        data.add(new Object[] { new URL("file:///myDir/file with whitespaces"), new File("/myDir/file with whitespaces") });
+        data.add(new Object[] { new URL("file:///file%20with%20whitespaces"), new File("/file with whitespaces") });
+
+        return data.toArray(new Object[0][0]);
+    }
+    
     @Test(dataProvider = "keyProvider")
     public void getValue(String key, String expected) {
         String actual = cut.getValue(key);
