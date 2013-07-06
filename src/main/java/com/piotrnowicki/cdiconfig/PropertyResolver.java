@@ -16,6 +16,9 @@ import java.util.Properties;
 import javax.annotation.PostConstruct;
 import javax.inject.Singleton;
 
+import org.jboss.vfs.VFS;
+import org.jboss.vfs.VirtualFile;
+
 /**
  * <p>
  * Reads all valid property files within the classpath and prepare them to be fetched.
@@ -39,6 +42,9 @@ import javax.inject.Singleton;
 @Singleton
 public class PropertyResolver {
 
+    // VFS protocol prefix
+    private static final String VFS_PROTOCOL = "vfs";
+    
     // TODO: Change it to some hierarchical structure if required.
     Map<String, Object> properties = new HashMap<>();
 
@@ -106,7 +112,17 @@ public class PropertyResolver {
         File result;
 
         try {
-            result = new File(url.toURI());
+            // JBoss VFS
+            if (VFS_PROTOCOL.equals(url.getProtocol())) {
+                VirtualFile vf = VFS.getChild(url.toURI());
+                try {
+                    result = vf.getPhysicalFile();
+                } catch (IOException e) {
+                    result = new File(url.toURI());
+                }
+            } else {
+                result = new File(url.toURI());
+            }
         } catch (URISyntaxException e) {
             result = new File(url.getPath());
         }
